@@ -119,10 +119,10 @@
                         </table>
                     </div>
                     <hr>
-                        <div class="card-header border-0">
+                        {{-- <div class="card-header border-0">
                             <div class="row align-items-center">
                             {{$transactions->links()}}
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -11,16 +11,20 @@
 |
 */
 
+use App\Http\Controllers\TransactionController;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'TransactionController@index')->name('home');
 Route::get('/transactions', 'TransactionController@create')->name('transactions');
 Route::post('/transactions/create', 'TransactionController@store')->name('transactions.create');
-Route::get('/transactions/index', 'TransactionController@index')->name('transactions.index');
 
+
+
+Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', 'UserController', ['except' => ['show']]);

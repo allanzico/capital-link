@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transaction;
 
+
 class TransactionController extends Controller
 {
     /**
@@ -14,10 +15,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::orderBy('date', 'asc')->paginate(10);
-        // $transactions = Transaction::all();
+        //$transactions = Transaction::orderBy('date', 'asc')->paginate(10);
+
+        $transactions = Transaction::all();
         return view('dashboard')->with('transactions', $transactions);
-        return view('headers.cards')->with('transactions', $transactions);
     }
 
     /**
