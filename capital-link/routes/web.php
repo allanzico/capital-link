@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'TransactionController@index')->name('home');
-Route::get('/transactions', 'TransactionController@create')->name('transactions');
-Route::post('/transactions/create', 'TransactionController@store')->name('transactions.create');
+Route::get('/transactions/create', 'TransactionController@create')->name('transactions');
+Route::post('/transactions', 'TransactionController@store')->name('transactions.create');
 
 
 

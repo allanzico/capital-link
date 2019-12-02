@@ -107,6 +107,23 @@
                                     <td>
                                             {{$transaction->notes}}
                                     </td>
+                                             <td class="text-right">
+                                            <div class="dropdown">
+                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                                                        <form action="#" method="post">
+                                                            <a class="dropdown-item" href="#">{{ __('Edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                                {{ __('Delete') }}
+                                                            </button>
+                                                        </form>
+
+                                                </div>
+                                            </div>
+                                        </td>
                                 </tr>
 
                             </tbody>
@@ -119,10 +136,10 @@
                         </table>
                     </div>
                     <hr>
-                        {{-- <div class="card-header border-0">
+                        <div class="card-header border-0">
                             <div class="row align-items-center">
                             {{$transactions->links()}}
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

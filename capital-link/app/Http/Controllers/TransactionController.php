@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
-
+use Illuminate\Database\Eloquent\Model;
 
 class TransactionController extends Controller
 {
@@ -15,9 +15,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //$transactions = Transaction::orderBy('date', 'asc')->paginate(10);
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(5);
 
-        $transactions = Transaction::all();
+        //$transactions = Transaction::all();
         return view('dashboard')->with('transactions', $transactions);
     }
 
@@ -40,13 +40,30 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'owner_id' => 'required',
             'date' => 'required',
             'amount' => 'required',
             // 'paid_by' => 'required',
-            // 'paid_for' => 'required'
+
         ]);
 
-        return 123;
+        //Change date format
+        $originalDate = $request->input('date');
+        $newDate = date("Y-m-d", strtotime($originalDate));
+
+        //Create Transaction
+        $newTransaction = new Transaction;
+        $newTransaction->owner_id = $request->input('owner_id');
+        $newTransaction->date = $newDate;
+        $newTransaction->amount = $request->input('amount');
+        $newTransaction->payment_type = $request->input('payment_type');
+        $newTransaction->payed_for = $request->input('payed_for');
+        $newTransaction->owner_name = $request->input('owner_name');
+        $newTransaction->notes = $request->input('notes');
+
+        $newTransaction->save();
+        //return redirect('/home');
+        return redirect()->route('home')->withStatus(__('Savings added succesfully.'));
     }
 
     /**

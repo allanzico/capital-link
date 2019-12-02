@@ -15,9 +15,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ action('TransactionController@store') }}" autocomplete="off">
+                        <form method="post" action="/transactions" autocomplete="off">
                             @csrf
-
+                    <div class="form-group">
+                                <label for="title">OWNER ID</label>
+                                <input type="text" class="form-control" id="owner_id"  name="owner_id">
+                            </div>
                             <h6 class="heading-small text-muted mb-4">{{ __('New Transaction') }}</h6>
                             <div class="pl-lg-4">
 
@@ -28,7 +31,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                         </div>
-                                        <input class="form-control datepicker" placeholder="Select date" type="text" value="">
+                                        <input class="form-control datepicker" name="date" placeholder="Select date" type="text" value="">
                                     </div>
                                 </div>
 
@@ -48,11 +51,12 @@
                                 <div class="form-group{{ $errors->has('paid_by') ? ' has-danger' : '' }}">
 
                                     <label class="form-control-label" for="input-paid_by">{{ __('Paid By') }}</label>
-                                    <select class="form-control" id="input-paid_by">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-control" id="input-paid_by" name="owner_name">
+                                         @if (count($members)>0)
+                                            @foreach ($members as $member)
+                                                <option>{{$member->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @if ($errors->has('paid_by'))
                                         <span class="invalid-feedback" role="alert">
@@ -67,7 +71,7 @@
                                 <div class="form-group{{ $errors->has('paid_for') ? ' has-danger' : '' }}">
 
                                     <label class="form-control-label" for="input-paid_for">{{ __('Paid For') }}</label>
-                                    <select class="form-control" id="input-paid_for">
+                                    <select class="form-control" id="input-paid_for" name="payed_for">
                                         <option selected>Choose...</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
@@ -81,11 +85,19 @@
 
 
                                 </div>
-
+                                {{-- payment type --}}
+                               <div class="form-group">
+                                  <label for="description">Payment Type</label>
+                                    <select class="form-control" name="payment_type">
+                                        <option>Mastercard</option>
+                                        <option>Mobile Money</option>
+                                        <option>Bank</option>
+                                    </select>
+                                </div>
                                 {{-- Notes  --}}
                                 <div class="form-group">
                                      <label class="form-control-label" for="input-amount">{{ __('Notes') }}</label>
-                                     <textarea class="form-control form-control-alternative" rows="3" placeholder="Add notes ..."></textarea>
+                                     <textarea class="form-control form-control-alternative" rows="3" placeholder="Add notes ..." name="notes"></textarea>
                                 </div>
 
                                 <div class="text-center">
