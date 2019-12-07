@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Helper\Table;
 
 class TransactionController extends Controller
 {
@@ -44,21 +46,22 @@ class TransactionController extends Controller
             'date' => 'required',
             'amount' => 'required',
             // 'paid_by' => 'required',
-
         ]);
-
+        //Insert Select Id
+        $payee_name = $request->input('owner_name');
+        $owner_id = User::select('id')->where('name', $payee_name)->get();
         //Change date format
         $originalDate = $request->input('date');
         $newDate = date("Y-m-d", strtotime($originalDate));
 
         //Create Transaction
         $newTransaction = new Transaction;
-        $newTransaction->owner_id = $request->input('owner_id');
+        $newTransaction->owner_id = $owner_id;
         $newTransaction->date = $newDate;
         $newTransaction->amount = $request->input('amount');
         $newTransaction->payment_type = $request->input('payment_type');
         $newTransaction->payed_for = $request->input('payed_for');
-        $newTransaction->owner_name = $request->input('owner_name');
+        $newTransaction->owner_name = $payee_name;
         $newTransaction->notes = $request->input('notes');
 
         $newTransaction->save();
