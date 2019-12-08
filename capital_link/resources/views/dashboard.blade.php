@@ -4,107 +4,105 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
-
-        <div class="row mt-5">
-            <div class="col-xl-12 mb-5 mb-xl-0">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">Savings</h3>
+            <div class="row">
+                    <div class="col-xl-12 mb-5 mb-xl-0">
+                        <div class="card shadow">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="mb-0">Savings</h3>
+                                    </div>
+                                    <div class="col text-right">
+                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">See all</a>
+
+                            <div class="col-12">
+                                @if (session('status'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {{ session('status') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-12">
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('status') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center table-flush">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Paid By</th>
+                                            <th scope="col">Payment Type</th>
+                                            <th scope="col">Payed For</th>
+                                            <th scope="col">Notes</th>
+                                        </tr>
+                                    </thead>
+                                    @if (count($transactions)>0)
+                                        @foreach ($transactions as $transaction)
+                                            <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                    {{$transaction->date}}
+                                            </th>
+                                            <td>
+                                                    {{$transaction->amount}}
+                                            </td>
+                                            <td>
+                                                    {{$transaction->owner_name}}
+                                            </td>
+                                            <td>
+                                                    {{$transaction->payment_type}}
+                                            </td>
+                                            <td>
+                                                    {{$transaction->payed_for}}
+                                            </td>
+                                            <td>
+                                                    {{$transaction->notes}}
+                                            </td>
+                                                     <td class="text-right">
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                                                                <form action="#" method="post">
+                                                                    <a class="dropdown-item" href="#">{{ __('Edit') }}</a>
+                                                                    <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                                        {{ __('Delete') }}
+                                                                    </button>
+                                                                </form>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                        </tr>
+
+                                    </tbody>
+                                        @endforeach
+
+                                    @else
+                                        <p>No transactions</p>
+                                    @endif
+
+                                </table>
                             </div>
-                        @endif
-                    </div>
-
-                    <div class="table-responsive">
-                        <!-- Projects table -->
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Paid By</th>
-                                    <th scope="col">Payment Type</th>
-                                    <th scope="col">Payed For</th>
-                                    <th scope="col">Notes</th>
-                                </tr>
-                            </thead>
-                            @if (count($transactions)>0)
-                                @foreach ($transactions as $transaction)
-                                    <tbody>
-                                <tr>
-                                    <th scope="row">
-                                            {{$transaction->date}}
-                                    </th>
-                                    <td>
-                                            {{$transaction->amount}}
-                                    </td>
-                                    <td>
-                                            {{$transaction->owner_name}}
-                                    </td>
-                                    <td>
-                                            {{$transaction->payment_type}}
-                                    </td>
-                                    <td>
-                                            {{$transaction->payed_for}}
-                                    </td>
-                                    <td>
-                                            {{$transaction->notes}}
-                                    </td>
-                                             <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-
-                                                        <form action="#" method="post">
-                                                            <a class="dropdown-item" href="#">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>
-
-                                                </div>
-                                            </div>
-                                        </td>
-                                </tr>
-
-                            </tbody>
-                                @endforeach
-
-                            @else
-                                <p>No transactions</p>
-                            @endif
-
-                        </table>
-                    </div>
-                    <hr>
-                        <div class="card-header border-0">
-                            <div class="row align-items-center">
-                            {{$transactions->links()}}
+                            <hr>
+                                <div class="card-header border-0">
+                                    <div class="row align-items-center">
+                                    {{$transactions->links()}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-xl-8 mb-5 mb-xl-0">
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
                         <div class="row align-items-center">
@@ -139,8 +137,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
 
         @include('layouts.footers.auth')
     </div>
