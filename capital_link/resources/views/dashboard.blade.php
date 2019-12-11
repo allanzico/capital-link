@@ -13,7 +13,7 @@
                                         <h3 class="mb-0">Savings</h3>
                                     </div>
                                     <div class="col text-right">
-                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                                        <a href="{{ route('home') }}" class="btn btn-sm btn-primary">See all</a>
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
 
                             <div class="table-responsive">
                                 <!-- Projects table -->
-                                <table class="table align-items-center table-flush">
+                                <table class="table align-items-center table-flush" id="savings-table">
                                     <thead class="thead-light">
                                         <tr>
                                             <th scope="col">Date</th>
@@ -49,7 +49,7 @@
                                             <th scope="row">
                                                     {{$transaction->date}}
                                             </th>
-                                            <td>
+                                            <td scope="col" class="sort" data-sort="amount">
                                                     {{$transaction->amount}}
                                             </td>
                                             <td>
@@ -70,14 +70,19 @@
                                                             <i class="fas fa-ellipsis-v"></i>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                            @if ($transaction)
+                                                            <form action="{{ route('transactions.destroy', $transaction) }}" method="post">
+                                                                @csrf
+                                                                @method('delete')
 
-                                                                <form action="#" method="post">
-                                                                    <a class="dropdown-item" href="#">{{ __('Edit') }}</a>
+                                                                    <a class="dropdown-item" href="{{ route('transactions.edit', $transaction) }}">{{ __('Edit') }}</a>
                                                                     <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
                                                                         {{ __('Delete') }}
                                                                     </button>
                                                                 </form>
-
+                                                            @else
+                                                                <a class="dropdown-item" href="{{ route('transactions.edit') }}">{{ __('Edit') }}</a>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </td>
@@ -101,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card bg-gradient-default shadow">
                     <div class="card-header bg-transparent">
@@ -147,4 +152,7 @@
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
+
 @endpush
+
+

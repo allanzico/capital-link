@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('Transaction')])
 
 @section('content')
-    @include('users.partials.header', ['title' => __('Add Transaction')])
+    @include('users.partials.header', ['title' => __('Update Transaction')])
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -10,12 +10,12 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('NEW TRANSACTION') }}</h3>
+                                <h3 class="mb-0">{{ __('EDIT TRANSACTION') }}</h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="/transactions" autocomplete="off">
+                        <form method="post" action="{{ route('transactions.edit', $transaction) }}" autocomplete="off">
                             @csrf
 
                                 {{-- User ID  --}}
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4">{{ __('Update') }}</button>
                                 </div>
                             </div>
                         </form>

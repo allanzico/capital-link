@@ -45,8 +45,11 @@ class TransactionController extends Controller
             'owner_id' => 'required',
             'date' => 'required',
             'amount' => 'required',
-            // 'paid_by' => 'required',
         ]);
+
+        //Get user ID by name
+        $owner_name = $request->input('owner_name');
+        $user_id = User::where('name', '=', $owner_name)->first()->id;
 
         //Change date format
         $originalDate = $request->input('date');
@@ -54,14 +57,13 @@ class TransactionController extends Controller
 
         //Create Transaction
         $newTransaction = new Transaction;
-        $newTransaction->owner_id =  $request->input('owner_id');
+        $newTransaction->owner_id =  $user_id;
         $newTransaction->date = $newDate;
         $newTransaction->amount = $request->input('amount');
         $newTransaction->payment_type = $request->input('payment_type');
         $newTransaction->payed_for = $request->input('payed_for');
-        $newTransaction->owner_name =  $request->input('owner_name');
+        $newTransaction->owner_name = $owner_name;
         $newTransaction->notes = $request->input('notes');
-
         $newTransaction->save();
         //return redirect('/home');
         return redirect()->route('home')->withStatus(__('Savings added succesfully.'));
@@ -70,7 +72,7 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Transaction $transaction
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -81,34 +83,36 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Transaction $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaction $transaction)
     {
-        //
+        return view('transactions.edit', compact('transaction'));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Transaction $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Transaction $transaction)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  App\Transaction $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaction $transaction)
     {
-        //
+        $transaction->delete();
+        return redirect()->route('home')->withStatus(__('Savings successfully deleted'));
     }
 }

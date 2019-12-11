@@ -21,7 +21,7 @@ class AddTransactionTable extends Migration
             $table->string('payment_type');
             $table->string('payed_for');
             $table->string('owner_name');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             //Foreign constraints

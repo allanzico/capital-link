@@ -21,7 +21,9 @@ Route::get('/', function () {
 Route::get('/home', 'TransactionController@index')->name('home');
 Route::get('/transactions/create', 'TransactionController@create')->name('transactions');
 Route::post('/transactions', 'TransactionController@store')->name('transactions.create');
-
+Route::delete('/transactions/destroy{transaction}', 'TransactionController@destroy')->name('transactions.destroy');
+Route::get('/transactions/edit{transaction}', 'TransactionController@edit')->name('transactions.edit');
+Route::put('/transactions/update{transaction}', 'TransactionController@update')->name('transactions.update');
 
 
 Auth::routes();
