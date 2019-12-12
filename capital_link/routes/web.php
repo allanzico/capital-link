@@ -11,8 +11,9 @@
 |
 */
 
+use App\Http\Controllers\FinancialYearController;
 use App\Http\Controllers\TransactionController;
-
+use Doctrine\DBAL\Schema\Index;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,7 +25,7 @@ Route::post('/transactions', 'TransactionController@store')->name('transactions.
 Route::delete('/transactions/destroy{transaction}', 'TransactionController@destroy')->name('transactions.destroy');
 Route::get('/transactions/edit{transaction}', 'TransactionController@edit')->name('transactions.edit');
 Route::put('/transactions/update{transaction}', 'TransactionController@update')->name('transactions.update');
-
+Route::get('/financial_year', 'FinancialYearController@index')->name('financial_year');
 
 Auth::routes();
 

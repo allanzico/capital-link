@@ -22,10 +22,12 @@ class AddTransactionTable extends Migration
             $table->string('payed_for');
             $table->string('owner_name');
             $table->text('notes')->nullable();
+            $table->unsignedBigInteger('financial_year_id');
             $table->timestamps();
 
             //Foreign constraints
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('financial_year_id')->references('id')->on('financial_year')->onDelete('cascade');
         });
     }
 
@@ -36,6 +38,6 @@ class AddTransactionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        //
     }
 }

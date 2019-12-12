@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        //Share data amongs all views
+       //Share data amongs all views
+
         $transactions = Transaction::all();
         $members = User::all();
         view()->share('transactions', $transactions);
